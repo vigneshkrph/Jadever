@@ -1,0 +1,174 @@
+<div class="page-shell">
+  <header class="topbar">
+    <div class="mobile-toolbar">
+      <button
+        type="button"
+        class="mobile-menu-toggle"
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="mobileMenuOpen()"
+        aria-controls="primary-navigation"
+        aria-label="Toggle menu"
+      >
+        <span aria-hidden="true">☰</span>
+      </button>
+
+      <button type="button" class="mobile-language" aria-label="Language">
+        <span aria-hidden="true">🌐</span>
+        <span>English</span>
+        <span aria-hidden="true">▾</span>
+      </button>
+    </div>
+
+    <div class="brand">
+      <img class="brand-mark" src="/logo.jpg" alt="Jadever logo" />
+      <div>
+        <p class="eyebrow">Jadever</p>
+        <h1>Jadever</h1>
+      </div>
+    </div>
+
+    <nav id="primary-navigation" class="topnav" aria-label="Primary" [class.is-open]="mobileMenuOpen()">
+      <a href="#home" (click)="closeMobileMenu()">Home</a>
+      <a href="#categories" (click)="closeMobileMenu()">Categories</a>
+      <a href="#collections" (click)="closeMobileMenu()">Collections</a>
+      <a href="#contact" (click)="closeMobileMenu()">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-visual hero-visual-full" aria-label="Featured promotions">
+        <div class="hero-stage hero-stage-full">
+          @for (slide of heroSlides; track slide.image; let index = $index) {
+            <img
+              class="hero-slide-image"
+              [class.is-active]="slideState(index) === 'active'"
+              [class.is-prev]="slideState(index) === 'prev'"
+              [class.is-next]="slideState(index) === 'next'"
+              [class.is-hidden]="slideState(index) === 'hidden'"
+              [src]="slide.image"
+              [alt]="slide.imageAlt"
+              (click)="handleSlideClick($event)"
+              role="button"
+              tabindex="0"
+              (keydown.enter)="nextSlide()"
+              (keydown.space)="nextSlide()"
+            />
+          }
+
+          <div class="hero-overlay"></div>
+
+          <button class="carousel-nav carousel-prev" type="button" (click)="previousSlide()" aria-label="Previous slide">
+            <span>‹</span>
+          </button>
+
+          <button class="carousel-nav carousel-next" type="button" (click)="nextSlide()" aria-label="Next slide">
+            <span>›</span>
+          </button>
+
+          <div class="carousel-indicators hero-carousel-indicators" aria-label="Carousel slide indicators">
+            @for (slide of heroSlides; track slide.image; let index = $index) {
+              <button
+                type="button"
+                class="carousel-dot"
+                [class.is-active]="currentSlide() === index"
+                (click)="setSlide(index)"
+                [attr.aria-label]="'Show slide ' + (index + 1)"
+              ></button>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-panel" id="categories">
+      <div class="section-heading">
+        <p class="eyebrow">Category discovery</p>
+        <h2>Guide visitors through a clear retail journey.</h2>
+        <p>
+          The layout mirrors a storefront homepage with easy-to-scan category blocks that can be
+          adapted for any product line or service catalog.
+        </p>
+      </div>
+
+      <div class="category-grid">
+        @for (category of categories; track category.name) {
+          <article class="category-card {{ category.accent }}">
+            <span class="category-index">0{{ $index + 1 }}</span>
+            <h3>{{ category.name }}</h3>
+            <p>{{ category.description }}</p>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section class="collections-panel" id="collections">
+      <div class="section-heading compact">
+        <p class="eyebrow">Featured sets</p>
+        <h2>Mix campaign cards, branded imagery, and product highlights.</h2>
+      </div>
+
+      <div class="collection-grid">
+        @for (collection of collections; track collection.title) {
+          <article class="collection-card">
+            <div class="collection-art" [style.background]="collection.surface">
+              <span>{{ collection.eyebrow }}</span>
+            </div>
+            <div class="collection-copy">
+              <h3>{{ collection.title }}</h3>
+              <p>{{ collection.description }}</p>
+              <a href="#contact">View more</a>
+            </div>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section class="insight-band">
+      <div>
+        <p class="eyebrow">Why it works</p>
+        <h2>Built for both brand polish and practical conversion paths.</h2>
+      </div>
+
+      <div class="insight-list">
+        @for (highlight of highlights; track highlight.title) {
+          <article>
+            <h3>{{ highlight.title }}</h3>
+            <p>{{ highlight.detail }}</p>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section class="contact-panel" id="contact">
+      <div>
+        <p class="eyebrow">Contact block</p>
+        <h2>Ready to turn this into your own static storefront?</h2>
+        <p>
+          Replace the placeholder messaging, swap in your brand assets, and extend the sections
+          for your own product story or lead capture flow.
+        </p>
+      </div>
+
+      <div class="contact-card">
+        <div>
+          <span>Sales</span>
+          <strong>hello@yourbrand.com</strong>
+        </div>
+        <div>
+          <span>Phone</span>
+          <strong>+00 123 456 789</strong>
+        </div>
+        <div>
+          <span>Location</span>
+          <strong>Global showroom</strong>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Static Angular storefront concept inspired by modern retail homepage structure.</p>
+    <a href="#home">Back to top</a>
+  </footer>
+</div>
